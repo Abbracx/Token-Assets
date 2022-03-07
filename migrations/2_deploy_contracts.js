@@ -1,12 +1,16 @@
 const DecagonToken = artifacts.require("DecagonToken");
 const TokenSale = artifacts.require("TokenSale")
-module.exports = async function(deployer) {
+const KycContract = artifacts.require("KycContract")
 
-  const addresses = web3.eth.getAccounts();
+module.exports = async function(deployer, _network, address) {
+
+  [owner, _] = address;
   await deployer.deploy(DecagonToken, 10000);
-  await deployer.deploy(TokenSale, 1, addresses[0], DecagonToken.address)
+  await deployer.deploy(KycContract)
+  await deployer.deploy(TokenSale, 1, owner, DecagonToken.address, KycContract.address);
+
   //Next take care of sending money from addresses[0] to TokenSale address
   //Token Sale needs to own the contract to destribute
-  token = await DecagonToken.deployed()
-  await token.transfer(TokenSale.address, 10000)
+  token = await DecagonToken.deployed();
+  await token.transfer(TokenSale.address, 10000);
 };

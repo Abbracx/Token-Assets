@@ -56,9 +56,9 @@ contract Crowdsale is Context, ReentrancyGuard {
      * @param token_token Address of the token being sold
      */
     constructor (uint256 token_rate, address payable token_wallet, IERC20 token_token) {
-        require(_rate > 0, "Crowdsale: rate is 0");
-        require(_wallet != address(0), "Crowdsale: wallet is the zero address");
-        require(address(_token) != address(0), "Crowdsale: token is the zero address");
+        require(token_rate > 0, "Crowdsale: rate is 0");
+        require(token_wallet != address(0), "Crowdsale: wallet is the zero address");
+        require(address(token_token) != address(0), "Crowdsale: token is the zero address");
 
         _rate = token_rate;
         _wallet = token_wallet;
